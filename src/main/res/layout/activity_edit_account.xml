@@ -38,74 +38,107 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_toRightOf="@+id/avater">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/account_settings_jabber_id"
-                    android:textColor="@color/primarytext"
-                    android:textSize="?attr/TextSizeBody" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/account_settings_jabber_id"
+                        android:textColor="@color/primarytext"
+                        android:textSize="?attr/TextSizeBody" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/account_jid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/account_settings_example_jabber_id"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/primarytext"
-                    android:textColorHint="@color/secondarytext"
-                    android:textSize="?attr/TextSizeBody" />
+                    <AutoCompleteTextView
+                        android:id="@+id/account_jid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/account_settings_example_jabber_id"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/primarytext"
+                        android:textColorHint="@color/secondarytext"
+                        android:textSize="?attr/TextSizeBody" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/account_settings_password"
-                    android:textColor="@color/primarytext"
-                    android:textSize="?attr/TextSizeBody" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/account_settings_password"
+                        android:textColor="@color/primarytext"
+                        android:textSize="?attr/TextSizeBody" />
 
-                <EditText
-                    android:id="@+id/account_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:textColor="@color/primarytext"
-                    android:textColorHint="@color/secondarytext"
-                    android:textSize="?attr/TextSizeBody" />
+                    <EditText
+                        android:id="@+id/account_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:textColor="@color/primarytext"
+                        android:textColorHint="@color/secondarytext"
+                        android:textSize="?attr/TextSizeBody" />
 
-                <CheckBox
-                    android:id="@+id/account_register_new"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/register_account"
-                    android:textColor="@color/primarytext"
-                    android:textSize="?attr/TextSizeBody" />
+                    <CheckBox
+                        android:id="@+id/account_register_new"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/register_account"
+                        android:textColor="@color/primarytext"
+                        android:textSize="?attr/TextSizeBody" />
 
-                <TextView
-                    android:id="@+id/account_confirm_password_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/account_settings_confirm_password"
-                    android:textColor="@color/primarytext"
-                    android:textSize="?attr/TextSizeBody"
-                    android:visibility="gone" />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/account_settings_specifyport"
+                        android:id="@+id/account_specify_port"
+                        android:enabled="true"
+                        android:checked="false"
+                        android:textColor="@color/primarytext"
+                        android:textSize="?attr/TextSizeBody" />
 
-                <EditText
-                    android:id="@+id/account_password_confirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="@string/confirm_password"
-                    android:inputType="textPassword"
-                    android:visibility="gone"
-                    android:textColor="@color/primarytext"
-                    android:textColorHint="@color/secondarytext"
-                    android:textSize="?attr/TextSizeBody" />
+                    <TextView
+                        android:id="@+id/account_text_port"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone"
+                        android:text="@string/account_settings_port"
+                        android:textColor="@color/primarytext"
+                        android:textSize="?attr/TextSizeBody" />
+
+                    <EditText
+                        android:id="@+id/account_port"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/port"
+                        android:inputType="number"
+                        android:textColor="@color/primarytext"
+                        android:textColorHint="@color/secondarytext"
+                        android:text="5222"
+                        android:visibility="gone"
+                        android:textSize="?attr/TextSizeBody"
+                        android:enabled="true" />
+
+                    <TextView
+                        android:id="@+id/account_confirm_password_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/account_settings_confirm_password"
+                        android:textColor="@color/primarytext"
+                        android:textSize="?attr/TextSizeBody"
+                        android:visibility="gone" />
+
+                    <EditText
+                        android:id="@+id/account_password_confirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:hint="@string/confirm_password"
+                        android:inputType="textPassword"
+                        android:visibility="gone"
+                        android:textColor="@color/primarytext"
+                        android:textColorHint="@color/secondarytext"
+                        android:textSize="?attr/TextSizeBody" />
                 </LinearLayout>
             </RelativeLayout>
 
-           <LinearLayout
+            <LinearLayout
                 android:id="@+id/stats"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

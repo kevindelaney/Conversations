@@ -45,7 +45,7 @@ public class DatabaseBackend extends SQLiteOpenHelper {
 		db.execSQL("PRAGMA foreign_keys=ON;");
 		db.execSQL("create table " + Account.TABLENAME + "(" + Account.UUID
 				+ " TEXT PRIMARY KEY," + Account.USERNAME + " TEXT,"
-				+ Account.SERVER + " TEXT," + Account.PASSWORD + " TEXT,"
+				+ Account.SERVER + " TEXT," + Account.PORT + " NUMBER," + Account.PORTSPECIFIED + " TEXT," + Account.PASSWORD + " TEXT,"
 				+ Account.ROSTERVERSION + " TEXT," + Account.OPTIONS
 				+ " NUMBER, " + Account.AVATAR + " TEXT, " + Account.KEYS
 				+ " TEXT)");

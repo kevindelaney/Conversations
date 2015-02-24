@@ -39,6 +39,9 @@ public class EditAccountActivity extends XmppActivity implements OnAccountUpdate
 	private AutoCompleteTextView mAccountJid;
 	private EditText mPassword;
 	private EditText mPasswordConfirm;
+    private EditText mPort;
+    private TextView mPortLabel;
+    private CheckBox mPortSpecified;
 	private CheckBox mRegisterNew;
 	private Button mCancelButton;
 	private Button mSaveButton;
@@ -95,6 +98,9 @@ public class EditAccountActivity extends XmppActivity implements OnAccountUpdate
 					return;
 				}
 			}
+
+            final boolean portspecified = mPortSpecified.isChecked();
+            final int port = Integer.parseInt(mPort.getText().toString());
 			if (mAccount != null) {
 				try {
 					mAccount.setUsername(jid.hasLocalpart() ? jid.getLocalpart() : "");
@@ -103,6 +109,8 @@ public class EditAccountActivity extends XmppActivity implements OnAccountUpdate
 					return;
 				}
 				mAccount.setPassword(password);
+                mAccount.setPort(port);
+                mAccount.setPortSpecified(portspecified);
 				mAccount.setOption(Account.OPTION_REGISTER, registerNewAccount);
 				xmppConnectionService.updateAccount(mAccount);
 			} else {
@@ -115,7 +123,7 @@ public class EditAccountActivity extends XmppActivity implements OnAccountUpdate
 				} catch (final InvalidJidException e) {
 					return;
 				}
-				mAccount = new Account(jid.toBareJid(), password);
+				mAccount = new Account(jid.toBareJid(), password, port, String.valueOf(portspecified));
 				mAccount.setOption(Account.OPTION_USETLS, true);
 				mAccount.setOption(Account.OPTION_USECOMPRESSION, true);
 				mAccount.setOption(Account.OPTION_REGISTER, registerNewAccount);
@@ -286,6 +294,9 @@ public class EditAccountActivity extends XmppActivity implements OnAccountUpdate
 		this.mPassword = (EditText) findViewById(R.id.account_password);
 		this.mPassword.addTextChangedListener(this.mTextWatcher);
 		this.mPasswordConfirm = (EditText) findViewById(R.id.account_password_confirm);
+        this.mPort = (EditText) findViewById(R.id.account_port);
+        this.mPortLabel = (TextView) findViewById(R.id.account_text_port);
+        this.mPortSpecified = (CheckBox) findViewById(R.id.account_specify_port);
 		this.mAvatar = (ImageView) findViewById(R.id.avater);
 		this.mAvatar.setOnClickListener(this.mAvatarClickListener);
 		this.mRegisterNew = (CheckBox) findViewById(R.id.account_register_new);
@@ -319,6 +330,22 @@ public class EditAccountActivity extends XmppActivity implements OnAccountUpdate
 			}
 		};
 		this.mRegisterNew.setOnCheckedChangeListener(OnCheckedShowConfirmPassword);
+
+        final OnCheckedChangeListener OnCheckedPortSpecified = new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(final CompoundButton buttonView,
+                                         final boolean isChecked) {
+                if (isChecked) {
+                    mPort.setVisibility(View.VISIBLE);
+                    mPortLabel.setVisibility(View.VISIBLE);
+                } else {
+                    mPort.setVisibility(View.GONE);
+                    mPortLabel.setVisibility(View.GONE);
+                }
+                updateSaveButton();
+            }
+        };
+        this.mPortSpecified.setOnCheckedChangeListener(OnCheckedPortSpecified);
 	}
 
 	@Override
@@ -423,6 +450,13 @@ public class EditAccountActivity extends XmppActivity implements OnAccountUpdate
 			this.mRegisterNew.setVisibility(View.GONE);
 			this.mRegisterNew.setChecked(false);
 		}
+        if (this.mAccount.getPortSpecified() == true) {
+            this.mPortSpecified.setChecked(true);
+            this.mPort.setVisibility(View.VISIBLE);
+        } else {
+            this.mPort.setVisibility(View.GONE);
+            this.mPortSpecified.setChecked(false);
+        }
 		if (this.mAccount.isOnlineAndConnected() && !this.mFetchingAvatar) {
 			this.mStats.setVisibility(View.VISIBLE);
 			this.mSessionEst.setText(UIHelper.readableTimeDifferenceFull(this, this.mAccount.getXmppConnection()

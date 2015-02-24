@@ -31,6 +31,8 @@ public class Account extends AbstractEntity {
 
 	public static final String USERNAME = "username";
 	public static final String SERVER = "server";
+    public static final String PORT = "port";
+    public static final String PORTSPECIFIED = "portspecified";
 	public static final String PASSWORD = "password";
 	public static final String OPTIONS = "options";
 	public static final String ROSTERVERSION = "rosterversion";
@@ -111,6 +113,8 @@ public class Account extends AbstractEntity {
 	public List<Conversation> pendingConferenceLeaves = new CopyOnWriteArrayList<>();
 	protected Jid jid;
 	protected String password;
+    protected int port = 0;
+    protected boolean portspecified = true;
 	protected int options = 0;
 	protected String rosterVersion;
 	protected State status = State.OFFLINE;
@@ -129,19 +133,21 @@ public class Account extends AbstractEntity {
 		this.uuid = "0";
 	}
 
-	public Account(final Jid jid, final String password) {
+	public Account(final Jid jid, final String password, final int port, final String portspecified) {
 		this(java.util.UUID.randomUUID().toString(), jid,
-				password, 0, null, "", null);
+				password, port, portspecified, 0, null, "", null);
 	}
 
 	public Account(final String uuid, final Jid jid,
-			final String password, final int options, final String rosterVersion, final String keys,
+			final String password, final int port, final String portspecified, final int options, final String rosterVersion, final String keys,
 			final String avatar) {
 		this.uuid = uuid;
 		this.jid = jid;
 		if (jid.isBareJid()) {
 			this.setResource("mobile");
 		}
+        this.port = port;
+        this.portspecified = Boolean.valueOf(portspecified);
 		this.password = password;
 		this.options = options;
 		this.rosterVersion = rosterVersion;
@@ -163,6 +169,8 @@ public class Account extends AbstractEntity {
 		return new Account(cursor.getString(cursor.getColumnIndex(UUID)),
 				jid,
 				cursor.getString(cursor.getColumnIndex(PASSWORD)),
+                cursor.getInt(cursor.getColumnIndex(PORT)),
+                cursor.getString(cursor.getColumnIndex(PORTSPECIFIED)),
 				cursor.getInt(cursor.getColumnIndex(OPTIONS)),
 				cursor.getString(cursor.getColumnIndex(ROSTERVERSION)),
 				cursor.getString(cursor.getColumnIndex(KEYS)),
@@ -198,12 +206,28 @@ public class Account extends AbstractEntity {
 	}
 
 	public String getPassword() {
-		return password;
-	}
+        return password;
+    }
 
-	public void setPassword(final String password) {
-		this.password = password;
-	}
+    public void setPassword(final String password) {
+        this.password = password;
+    }
+
+    public boolean getPortSpecified() {
+        return portspecified;
+    }
+
+    public void setPortSpecified(final boolean portspecified) {
+        this.portspecified = portspecified;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(final int port) {
+        this.port = port;
+    }
 
 	public State getStatus() {
 		if (isOptionSet(OPTION_DISABLED)) {
@@ -261,6 +285,7 @@ public class Account extends AbstractEntity {
 		values.put(SERVER, jid.getDomainpart());
 		values.put(PASSWORD, password);
 		values.put(OPTIONS, options);
+        values.put(PORT, port);
 		values.put(KEYS, this.keys.toString());
 		values.put(ROSTERVERSION, rosterVersion);
 		values.put(AVATAR, avatar);

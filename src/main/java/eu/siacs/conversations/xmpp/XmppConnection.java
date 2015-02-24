@@ -172,7 +172,12 @@ public class XmppConnection implements Runnable {
 							// TODO: Handle me?`
 							srvRecordServer = "";
 						}
-						final int srvRecordPort = namePort.getInt("port");
+                        final int srvRecordPort;
+                        if (account.getPortSpecified() == true){
+                           srvRecordPort = account.getPort();
+                        } else {
+                           srvRecordPort = namePort.getInt("port");;
+                        }
 						final String srvIpServer = namePort.getString("ip");
 						final InetSocketAddress addr;
 						if (srvIpServer != null) {
@@ -202,7 +207,7 @@ public class XmppConnection implements Runnable {
 				}
 			} else if (result.containsKey("error")
 					&& "nosrv".equals(result.getString("error", null))) {
-				socket = new Socket(account.getServer().getDomainpart(), 5222);
+				socket = new Socket(account.getServer().getDomainpart(), account.getPort());
 			} else {
 				throw new IOException("timeout in dns");
 			}
