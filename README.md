@@ -1,6 +1,6 @@
 # Conversations
 
-Conversations: the very last word in instant messaging. Modified by Kevin Delaney to allow ports to be specified instead of solely depending on SRV records.
+Conversations: the very last word in instant messaging. Modified by [Kevin Delaney](https://github.com/kevindelaney) to allow server ports to be specified instead of solely depending on SRV records.
 
 [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=eu.siacs.conversations)
 
